@@ -17,6 +17,7 @@ app.post("/api/message", function (req, res) {
       return res.send("ok");
     case "maintanace":
       broadCastToAllClients(
+        wss,
         JSON.stringify({
           messageId,
           message: messageBody.message,
