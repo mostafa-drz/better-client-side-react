@@ -50,13 +50,13 @@ socket.current.onmessage = function (event) {
 
 ```
 
-# Run on your local machine
+# Setup on your local machine
 1. Clone the repo  `git clone https://github.com/mostafa-drz/better-serverless-react.git `
 2. run `yarn dev` from root
 It opens the client on port `3001`, Express App on `3000` and the `WebSocket` on `8080`
 
 The Express App is simply responsible for listneing to commands from our pipelines/backend/other tooling and then the websocket server broadcats that command.
 
-_NOTE_ None of the codes in this repository are production ready, for example there is no auth checking on the Express App, the purpose of this repo is just to demonstracte a paradigm that can be used in real Apps in production.
+__NOTE__ None of the codes in this repository are production ready, for example there is no auth checking on the Express App, the purpose of this repo is just to demonstracte a paradigm that can be used in real Apps in production.
 
 Stay safe 🤿
