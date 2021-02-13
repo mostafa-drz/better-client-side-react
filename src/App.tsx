@@ -1,8 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useRef } from "react";
+import logo from "./logo.svg";
+import "./App.css";
 
 function App() {
+  const socket = useRef(
+    new WebSocket(process.env.REACT_APP_WEB_SOCKET_SERVER!)
+  );
+  useEffect(() => {
+    socket.current.onopen = function (e) {
+      console.info("[open] Connection established");
+    };
+    socket.current.onmessage = function (event) {
+      console.info(`[message] Data received from server: ${event.data}`);
+    };
+    socket.current.onerror = function (error) {
+      console.error(`[error] ${error}`);
+    };
+  }, []);
   return (
     <div className="App">
       <header className="App-header">
