@@ -21,8 +21,9 @@
     "prestart": "yarn install",
     "start": "PORT=3001 react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "prepush":"yarn build",
+    "push": "aws s3 sync --delete build s3://websocket-app --profile websocket",
+    "postpush": "node postPush.js"
   },
   "eslintConfig": {
     "extends": [
@@ -43,6 +44,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-notify-toast": "^0.5.2"
+    "@types/react-notify-toast": "^0.5.2",
+    "node-fetch": "^2.6.1"
   }
 }
