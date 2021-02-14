@@ -1,6 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { notify } from "react-notify-toast";
 
+const WebSocketHosts = {
+  development: "ws://localhost:8080",
+  production: "wss://thawing-depths-04303.herokuapp.com/",
+};
 const SocketContext = React.createContext({
   maintWindow: "off",
 });
@@ -9,7 +13,7 @@ const useSocketContext = () => React.useContext(SocketContext);
 
 function SocketContextProvider(props) {
   const [maintWindow, setMaintWindow] = useState(false);
-  const socket = useRef(new WebSocket(process.env.REACT_APP_WEB_SOCKET_SERVER));
+  const socket = useRef(new WebSocket(WebSocketHosts[process.env.NODE_ENV]));
 
   useEffect(() => {
     socket.current.onopen = function (e) {
@@ -37,7 +41,7 @@ function SocketContextProvider(props) {
           );
 
           break;
-        case "maintanace":
+        case "maintenance":
           if (data.status === "on") {
             notify.show(
               <div>

@@ -4,6 +4,7 @@ const app = express();
 const http = require("http");
 const server = http.createServer(app);
 const PORT = process.env.PORT || 8080;
+const path = require("path");
 
 app.use(express.json());
 let wss;
@@ -20,7 +21,7 @@ app.post("/api/message", function (req, res) {
         })
       );
       return res.send("ok");
-    case "maintanace":
+    case "maintenance":
       broadCastToAllClients(
         wss,
         JSON.stringify({
@@ -33,6 +34,10 @@ app.post("/api/message", function (req, res) {
     default:
       return res.status(400).send("what do you mean?");
   }
+});
+
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "index.html"));
 });
 
 app.get("/api/ping", (req, res) => {

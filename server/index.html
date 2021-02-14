@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Control the Frontend App</title>
+  </head>
+  <style>
+    .container {
+      width: 100vw;
+      height: 100vh;
+      background-color: #fafafa;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    h1 {
+      text-align: center;
+    }
+    button {
+      display: block;
+      padding: 1% 3%;
+      font-size: 1.5rem;
+      border-radius: 5px;
+      margin: 1% 2%;
+    }
+    input {
+      height: 2rem;
+      padding: 2px;
+      margin: 1% 2%;
+      width: 300px;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <h1>Simple Control Room 🖥</h1>
+      <button onclick="handleCommand('new-version')">
+        A New Version Available
+      </button>
+      <input
+        placeholder="maintenance message"
+        id="maintenance-message"
+        value="Sorry, we need to fix something quickly 🙈"
+      />
+      <button onclick="handleCommand('maintenance-on')">Maintenance ON</button>
+      <button onclick="handleCommand('maintenance-off')">
+        Maintenance Off
+      </button>
+    </div>
+    <script>
+      function handleCommand(id) {
+        let body;
+        switch (id) {
+          case "new-version":
+            body = {
+              messageId: "new-version",
+              messageBody: {
+                version: "1.1.1",
+              },
+            };
+            break;
+          case "maintenance-on":
+            body = {
+              messageId: "maintenance",
+              messageBody: {
+                message: document.getElementById("maintenance-message").value,
+                status: "on",
+              },
+            };
+            break;
+          case "maintenance-off":
+            body = {
+              messageId: "maintenance",
+              messageBody: {
+                status: "off",
+              },
+            };
+            break;
+          default:
+            console.error("What are you talking about?");
+            break;
+        }
+        console.log(body);
+        fetch("/api/message", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        })
+          .then((resp) => resp.text())
+          .then((data) => console.log(data))
+          .catch((error) => console.log("Ooops", error));
+      }
+    </script>
+  </body>
+</html>
