@@ -1,6 +1,9 @@
 const WebSocket = require("ws");
 const express = require("express");
 const app = express();
+const http = require("http");
+const server = http.createServer(app);
+
 app.use(express.json());
 let wss;
 
@@ -35,12 +38,12 @@ app.get("/api/ping", (req, res) => {
   res.send("PONG");
 });
 
-app.listen(3000, (error) => {
+server.listen(3000, (error) => {
   if (error) {
     console.error(`Something went wrong on Express Server 💔`);
   } else {
     console.log(`Express server is running...`);
-    wss = new WebSocket.Server({ port: 8080 });
+    wss = new WebSocket.Server({ server });
   }
 });
 
