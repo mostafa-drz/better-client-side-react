@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 let wss;
+
 app.post("/api/message", function (req, res) {
   const { messageId, messageBody } = req.body;
   switch (messageId) {
@@ -28,6 +29,10 @@ app.post("/api/message", function (req, res) {
     default:
       return res.status(400).send("what do you mean?");
   }
+});
+
+app.get("/api/ping", (req, res) => {
+  res.send("PONG");
 });
 
 app.listen(3000, (error) => {
