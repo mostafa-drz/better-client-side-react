@@ -1,4 +1,4 @@
-# better-serverless-react
+# better-client-side-react
 How to have a control room for Serverless Apps deployments?
 
 This is part of a blog post I'm writing on medium. But the basic idea is on a servelrless React App which is completnly rendered on client side we don't have that much control over deployments and what needs to happen after, before. Some of the challenges are:
